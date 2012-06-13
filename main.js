@@ -119,12 +119,20 @@ var sketch = (function () {
 				xPos = x;
 				yPos = y;
 			}
+			
+			var grad1 = ctx.createLinearGradient(0, 0, window.innerWidth, window.innerHeight);
+			grad1.addColorStop(0,    'yellow');
+			grad1.addColorStop(0.25, 'red');
+			grad1.addColorStop(0.50, 'blue');
+			grad1.addColorStop(0.75, 'limegreen');
+  
+			ctx.strokeStyle = grad1;
 		
 			ctx.lineCap = 'round';
 			ctx.lineJoin = 'round';
 			ctx.lineWidth = size; 
-			ctx.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')'; 
-			ctx.globalCompositeOperation = 'source-over';	
+			//ctx.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')'; 
+			ctx.globalCompositeOperation = 'source-over';
 			ctx.beginPath();
 		    ctx.moveTo(xPos, yPos);
 		    ctx.lineTo(x, y);
@@ -144,7 +152,12 @@ var sketch = (function () {
 			ctx.lineCap = 'round';
 			ctx.lineJoin = 'round';
 			ctx.lineWidth = size; 
-			ctx.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')'; 
+			var grad1 = ctx.createLinearGradient(0, 0, window.innerWidth, window.innerHeight);
+			grad1.addColorStop(0,    'yellow');
+			grad1.addColorStop(0.25, 'red');
+			grad1.addColorStop(0.50, 'blue');
+			grad1.addColorStop(0.75, 'limegreen');
+			ctx.strokeStyle = grad1;
 			ctx.globalCompositeOperation = 'source-over';
 		    ctx.beginPath();
 		    ctx.moveTo(lines[id].x, lines[id].y);
