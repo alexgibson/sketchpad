@@ -172,6 +172,10 @@ var sketch = (function () {
 		},
 		
 		clearCanvas: function () {
+		
+			if (!confirm("Clear the drawing?")) {
+				return;
+			}
 			canvas.setAttribute("height", window.innerHeight + "px"); 
 			canvas.setAttribute("width",  window.innerWidth + "px");
 		}
