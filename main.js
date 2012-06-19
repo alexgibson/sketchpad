@@ -55,6 +55,9 @@ var sketch = (function () {
 			document.addEventListener('touchmove', function(e) {
 				e.preventDefault()
 			}, false);
+			
+			//shake gesture
+			window.addEventListener('shake', sketch.clearCanvas, false);
 		},
 
 		onTouchStart: function (e) {
@@ -166,6 +169,11 @@ var sketch = (function () {
 		    ctx.closePath();
 
 		    return { x: lines[id].x + moveX, y: lines[id].y + moveY };
+		},
+		
+		clearCanvas: function () {
+			canvas.setAttribute("height", window.innerHeight + "px"); 
+			canvas.setAttribute("width",  window.innerWidth + "px");
 		}
 	};
 }());

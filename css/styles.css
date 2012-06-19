@@ -15,7 +15,11 @@ html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address
 html { 
 	-webkit-user-select: none;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	-webkit-touch-callout: none; 
+	-webkit-touch-callout: none;
+}
+
+body {
+ 	overflow: hidden;
 }
 
 canvas {
