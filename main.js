@@ -24,7 +24,7 @@ var sketch = (function () {
 
 			var doc = document,
 				head = doc.getElementsByTagName('head')[0],
-				pixelRatio = window.devicePixelRatio,
+				pixelRatio = sketch.getPixelRatio();
 				meta = doc.createElement('meta');
 		
 			meta.setAttribute('name', 'viewport');
@@ -58,6 +58,13 @@ var sketch = (function () {
 			
 			//shake gesture
 			window.addEventListener('shake', sketch.clearCanvas, false);
+		},
+		
+		getPixelRatio:function () {
+			if ('devicePixelRatio' in window) {
+				return window.devicePixelRatio;
+			}
+			return 1;
 		},
 
 		onTouchStart: function (e) {
@@ -161,6 +168,7 @@ var sketch = (function () {
 			grad1.addColorStop(0.50, 'blue');
 			grad1.addColorStop(0.75, 'limegreen');
 			ctx.strokeStyle = grad1;
+			//ctx.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
 			ctx.globalCompositeOperation = 'source-over';
 		    ctx.beginPath();
 		    ctx.moveTo(lines[id].x, lines[id].y);
