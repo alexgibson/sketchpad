@@ -1,7 +1,7 @@
 /**
  * @author Alex Gibson
  * @name SketchPad
- * @desc Multi-touch sketchpad demo for line drawing
+ * @desc Multi-touch sketchpad demo for HTML5 Canvas drawing
  */
  
 var sketch = (function () {
@@ -16,7 +16,8 @@ var sketch = (function () {
 		size = 1,
 		xPos,
 		yPos,
-		lines = [];
+		lines = [],
+		hasLocalStorage = 'localStorage' in window && window['localStorage'] !== null;
 		
 	return {
 	
@@ -24,8 +25,10 @@ var sketch = (function () {
 
 			var doc = document,
 				head = doc.getElementsByTagName('head')[0],
-				pixelRatio = sketch.getPixelRatio();
-				meta = doc.createElement('meta');
+				pixelRatio = sketch.getPixelRatio(),
+				meta = doc.createElement('meta'),
+				dataURL = null,
+				image = new Image();
 		
 			meta.setAttribute('name', 'viewport');
 			meta.setAttribute('content', 'width=device-width, user-scalable=no, maximum-scale=' + (1 / pixelRatio) + ', initial-scale=' + (1 / pixelRatio));
@@ -58,6 +61,17 @@ var sketch = (function () {
 			
 			//shake gesture
 			window.addEventListener('shake', sketch.clearCanvas, false);
+
+			if (hasLocalStorage) {
+				dataURL = localStorage.getItem('sketchpad');
+				if (dataURL) {
+					image.onload = function () {
+						ctx.drawImage(image, 0, 0);
+					}
+					image.src = dataURL;
+				}
+				
+			}
 		},
 		
 		getPixelRatio:function () {
@@ -99,12 +113,14 @@ var sketch = (function () {
 		onTouchEnd: function (e) {
 			if (e.touches.length === 0) {
 				lines = [];
+				sketch.saveImageData();
 			}
 		},
 		
 		onTouchCancel: function (e) {
 			if (e.touches.length === 0) {
 				lines = [];
+				sketch.saveImageData();
 			}
 		},
 			
@@ -119,6 +135,7 @@ var sketch = (function () {
 			
 		onMouseUp: function (e) {
 			sketch.endDraw();
+			sketch.saveImageData();
 			canvas.removeEventListener('mousemove', sketch.onMouseMove, false);
 			canvas.removeEventListener('mouseup', sketch.onMouseUp, false);		
 		},
@@ -177,6 +194,19 @@ var sketch = (function () {
 		    ctx.closePath();
 
 		    return { x: lines[id].x + moveX, y: lines[id].y + moveY };
+		},
+
+		saveImageData: function () {
+			var data = ctx.getImageData(0, 0, window.innerWidth, window.innerHeight);
+			if (hasLocalStorage) {
+				try {
+					localStorage.setItem('sketchpad', canvas.toDataURL("image/png"));
+				} catch (e) {
+					if (e === 'QUOTA_EXCEEDED_ERR') {
+						console.error('Could not save the image data as localStorage max quota has been exceeded.');
+					}
+				}
+			}
 		},
 		
 		clearCanvas: function () {
