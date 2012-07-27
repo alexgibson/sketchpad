@@ -13,10 +13,12 @@ var sketch = (function () {
 		b = 0, //blue stroke
 		a = 0.5, //alpha opacity
 		started = false,
+		moved = false,
 		size = 1,
 		xPos,
 		yPos,
 		lines = [],
+		optionsOpen = false,
 		hasLocalStorage = 'localStorage' in window && window['localStorage'] !== null;
 		
 	return {
@@ -90,30 +92,40 @@ var sketch = (function () {
 					x: touch.clientX, 
 		            y: touch.clientY 
 		        };
-			}, this);		
+			}, this);
+			moved = false;
+			started = true;		
 		},
 			
 		onTouchMove: function (e) {
 			
 			e.preventDefault();	
 			
-			_.each(e.touches, function (touch) {
+			if (started && !optionsOpen) {
+				_.each(e.touches, function (touch) {
 				
-				var id = touch.identifier,
-					moveX = touch.clientX - lines[id].x,
-			        moveY = touch.clientY - lines[id].y,
-			        newPos = sketch.drawMulti(id, moveX, moveY);
+					var id = touch.identifier,
+						moveX = touch.clientX - lines[id].x,
+			        	moveY = touch.clientY - lines[id].y,
+			        	newPos = sketch.drawMulti(id, moveX, moveY);
 		                
-		        lines[id].x = newPos.x;
-		        lines[id].y = newPos.y;
+		        	lines[id].x = newPos.x;
+		        	lines[id].y = newPos.y;
 		
-			}, this);
+				}, this);
+			}
+			moved = true;
 		},
 		
 		onTouchEnd: function (e) {
 			if (e.touches.length === 0) {
 				lines = [];
 				sketch.saveImageData();
+				if (!moved) {
+					sketch.toggleOptions();
+				}
+				moved = false;
+				started = false;
 			}
 		},
 		
@@ -121,21 +133,33 @@ var sketch = (function () {
 			if (e.touches.length === 0) {
 				lines = [];
 				sketch.saveImageData();
+				moved = false;
+				started = false;
 			}
 		},
 			
-		onMouseDown: function (e) {					
+		onMouseDown: function (e) {	
+			moved = false;
+			started = true;				
 			canvas.addEventListener('mousemove', sketch.onMouseMove, false);
 			canvas.addEventListener('mouseup', sketch.onMouseUp, false);			
 		},
 			
 		onMouseMove: function (e) {
-			sketch.drawLine(e.clientX, e.clientY);
+			if (started && !optionsOpen) {
+				sketch.drawLine(e.clientX, e.clientY);
+			}
+			moved = true;	
 		},
 			
 		onMouseUp: function (e) {
 			sketch.endDraw();
 			sketch.saveImageData();
+			if (!moved) {
+				sketch.toggleOptions();
+			}
+			moved = false;
+			started = false;
 			canvas.removeEventListener('mousemove', sketch.onMouseMove, false);
 			canvas.removeEventListener('mouseup', sketch.onMouseUp, false);		
 		},
@@ -216,6 +240,32 @@ var sketch = (function () {
 			}
 			canvas.setAttribute("height", window.innerHeight + "px"); 
 			canvas.setAttribute("width",  window.innerWidth + "px");
+			sketch.saveImageData();
+			sketch.toggleOptions();
+		},
+
+		toggleOptions: function () {
+			if (!optionsOpen) {
+				sketch.showDrawingOptions();
+			} else {
+				sketch.closeDrawingOptions();
+			}
+		},
+
+		showDrawingOptions: function () {
+			var doc = document;
+
+			doc.getElementById('clear-canvas').addEventListener('click', this.clearCanvas, false);
+			doc.querySelector('.options').style.display = 'block';
+			optionsOpen = true;
+		},
+
+		closeDrawingOptions: function () {
+			var doc = document;
+
+			doc.getElementById('clear-canvas').removeEventListener('click', this.clearCanvas, false);
+			doc.querySelector('.options').style.display = 'none';
+			optionsOpen = false;
 		}
 	};
 }());

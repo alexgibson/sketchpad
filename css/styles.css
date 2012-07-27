@@ -24,4 +24,73 @@ body {
 
 canvas {
 	cursor: crosshair;
+	z-index: 1;
+}
+
+.options {
+	display: none;
+	position: absolute;
+	width: 300px;
+	height: 300px;
+	top: 50%;
+	left: 50%;
+	margin-top: -150px;
+	margin-left: -150px;
+	z-index: 2;
+	background-color: rgba(0,0,0,0.5);
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	-webkit-animation-name: scaleUp;
+	-webkit-animation-duration: 0.7s;
+	-moz-animation-name: scaleUp;
+	-moz-animation-duration: 1s;
+	-o-animation-name: scaleUp;
+	-o-animation-duration: 1s;
+	animation-name: scaleUp;
+	animation-duration: 1s;
+}
+
+@-webkit-keyframes scaleUp {
+	0% {
+		-webkit-transform: scale(0);
+		opacity: 0;
+	}
+	100% {
+		-webkit-transform: scale(1);
+		opacity: 1;
+	}
+}
+
+@-moz-keyframes scaleUp {
+	0% {
+		-moz-transform: scale(0);
+		opacity: 0;
+	}
+	100% {
+		-moz-transform: scale(1);
+		opacity: 1;
+	}
+}
+
+@-o-keyframes scaleUp {
+	0% {
+		-o-transform: scale(0);
+		opacity: 0;
+	}
+	100% {
+		-o-transform: scale(1);
+		opacity: 1;
+	}
+}
+
+@keyframes scaleUp {
+	0% {
+		transform: scale(0);
+		opacity: 0;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
 }
