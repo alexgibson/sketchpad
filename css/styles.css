@@ -20,6 +20,7 @@ html {
 
 body {
  	overflow: hidden;
+ 	position: relative;
 }
 
 canvas {
@@ -30,13 +31,14 @@ canvas {
 .options {
 	display: none;
 	position: absolute;
-	width: 80%;
-	height: 80%;
-	top: 50%;
-	left: 50%;
-	margin-top: -40%;
-	margin-left: -40%;
+	top: 30%;
+	left: 10%;
+	right: 10%;
+	bottom: 30%;
+	padding: 1em;
 	z-index: 2;
+	text-align: center;
+	font-size: 100%;
 	background-color: rgba(0,0,0,0.5);
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -49,6 +51,11 @@ canvas {
 	-o-animation-duration: 1s;
 	animation-name: scaleUp;
 	animation-duration: 1s;
+}
+
+button {
+	width: 80%;
+	height: 2em;
 }
 
 @-webkit-keyframes scaleUp {

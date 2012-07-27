@@ -19,6 +19,7 @@ var sketch = (function () {
 		yPos,
 		lines = [],
 		optionsOpen = false,
+		pixelRatio = 1,
 		hasLocalStorage = 'localStorage' in window && window['localStorage'] !== null;
 		
 	return {
@@ -27,10 +28,11 @@ var sketch = (function () {
 
 			var doc = document,
 				head = doc.getElementsByTagName('head')[0],
-				pixelRatio = sketch.getPixelRatio(),
 				meta = doc.createElement('meta'),
 				dataURL = null,
 				image = new Image();
+
+			pixelRatio = sketch.getPixelRatio();
 		
 			meta.setAttribute('name', 'viewport');
 			meta.setAttribute('content', 'width=device-width, user-scalable=no, maximum-scale=' + (1 / pixelRatio) + ', initial-scale=' + (1 / pixelRatio));
@@ -253,9 +255,11 @@ var sketch = (function () {
 		},
 
 		showDrawingOptions: function () {
-			var doc = document;
+			var doc = document,
+			clearButton = doc.getElementById('clear-canvas');
 
-			doc.getElementById('clear-canvas').addEventListener('click', this.clearCanvas, false);
+			clearButton.style.fontSize = 100 * pixelRatio + '%';
+			clearButton.addEventListener('click', this.clearCanvas, false);
 			doc.querySelector('.options').style.display = 'block';
 			optionsOpen = true;
 		},
