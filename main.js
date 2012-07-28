@@ -122,10 +122,6 @@ var sketch = (function () {
 		onTouchEnd: function (e) {
 			if (e.touches.length === 0) {
 				lines = [];
-				sketch.saveImageData();
-				if (!moved) {
-					sketch.toggleOptions();
-				}
 				moved = false;
 				started = false;
 			}
@@ -134,7 +130,6 @@ var sketch = (function () {
 		onTouchCancel: function (e) {
 			if (e.touches.length === 0) {
 				lines = [];
-				sketch.saveImageData();
 				moved = false;
 				started = false;
 			}
@@ -156,10 +151,6 @@ var sketch = (function () {
 			
 		onMouseUp: function (e) {
 			sketch.endDraw();
-			sketch.saveImageData();
-			if (!moved) {
-				sketch.toggleOptions();
-			}
 			moved = false;
 			started = false;
 			canvas.removeEventListener('mousemove', sketch.onMouseMove, false);
@@ -173,18 +164,18 @@ var sketch = (function () {
 				yPos = y;
 			}
 			
-			var grad1 = ctx.createLinearGradient(0, 0, window.innerWidth, window.innerHeight);
+			/*var grad1 = ctx.createLinearGradient(0, 0, window.innerWidth, window.innerHeight);
 			grad1.addColorStop(0,    'yellow');
 			grad1.addColorStop(0.25, 'red');
 			grad1.addColorStop(0.50, 'blue');
-			grad1.addColorStop(0.75, 'limegreen');
+			grad1.addColorStop(0.75, 'limegreen');*/
   
-			ctx.strokeStyle = grad1;
+			//ctx.strokeStyle = grad1;
 		
 			ctx.lineCap = 'round';
 			ctx.lineJoin = 'round';
 			ctx.lineWidth = size; 
-			//ctx.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')'; 
+			ctx.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')'; 
 			ctx.globalCompositeOperation = 'source-over';
 			ctx.beginPath();
 		    ctx.moveTo(xPos, yPos);
@@ -205,13 +196,13 @@ var sketch = (function () {
 			ctx.lineCap = 'round';
 			ctx.lineJoin = 'round';
 			ctx.lineWidth = size; 
-			var grad1 = ctx.createLinearGradient(0, 0, window.innerWidth, window.innerHeight);
+			/*var grad1 = ctx.createLinearGradient(0, 0, window.innerWidth, window.innerHeight);
 			grad1.addColorStop(0,    'yellow');
 			grad1.addColorStop(0.25, 'red');
 			grad1.addColorStop(0.50, 'blue');
-			grad1.addColorStop(0.75, 'limegreen');
-			ctx.strokeStyle = grad1;
-			//ctx.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+			grad1.addColorStop(0.75, 'limegreen');*/
+			//ctx.strokeStyle = grad1;
+			ctx.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
 			ctx.globalCompositeOperation = 'source-over';
 		    ctx.beginPath();
 		    ctx.moveTo(lines[id].x, lines[id].y);
