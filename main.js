@@ -169,7 +169,6 @@ var sketch = (function () {
 			grad1.addColorStop(0.25, 'red');
 			grad1.addColorStop(0.50, 'blue');
 			grad1.addColorStop(0.75, 'limegreen');*/
-  
 			//ctx.strokeStyle = grad1;
 		
 			ctx.lineCap = 'round';
@@ -234,7 +233,6 @@ var sketch = (function () {
 			canvas.setAttribute("height", window.innerHeight + "px"); 
 			canvas.setAttribute("width",  window.innerWidth + "px");
 			sketch.saveImageData();
-			sketch.toggleOptions();
 		},
 
 		toggleOptions: function () {
@@ -248,7 +246,6 @@ var sketch = (function () {
 		showDrawingOptions: function () {
 			var doc = document,
 			clearButton = doc.getElementById('clear-canvas');
-
 			clearButton.style.fontSize = 100 * pixelRatio + '%';
 			clearButton.addEventListener('click', this.clearCanvas, false);
 			doc.querySelector('.options').style.display = 'block';
@@ -257,7 +254,6 @@ var sketch = (function () {
 
 		closeDrawingOptions: function () {
 			var doc = document;
-
 			doc.getElementById('clear-canvas').removeEventListener('click', this.clearCanvas, false);
 			doc.querySelector('.options').style.display = 'none';
 			optionsOpen = false;
