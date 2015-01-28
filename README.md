@@ -5,7 +5,7 @@ Multi-touch sketchpad for canvas line drawing based on the [fine work of Alex Gi
 
 ## Initialization
 To initialize the sketchpad, use 
-```
+```javascript
 pad = $('#your-element').sketchpad({ //options });
 pad.init();
 ```
