@@ -23,14 +23,16 @@
         },
         started: false,
         moved: false,
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: window.innerWidth+'px',
+        height: window.innerHeight+'px',
         size: 10,
         lines: [],
         optionsOpen: false,
         pixelRatio: 1
 
       }, options);
+    
+    console.log(settings);
 
     var plugin = {
       
@@ -69,10 +71,8 @@
 
         canvas = document.createElement('canvas');
         parent.append(canvas);
-        canvas.setAttribute("height", settings.height + "px");
-        canvas.setAttribute("width", settings.width + "px");
-        canvas.style.width = settings.width + 'px';
-        canvas.style.height = settings.height + 'px';
+        canvas.setAttribute("height", parseInt(parent.css('height')));
+        canvas.setAttribute("width", parseInt(parent.css('width')));
 
         if (!canvas.getContext) {
           alert('Your browser does not support Canvas 2D drawing.');
@@ -130,10 +130,10 @@
       onTouchMove: function(e) {
 
         e.preventDefault();
-
+      
         if (settings.started && !settings.optionsOpen) {
           _.each(e.touches, function(touch) {
-
+            console.log(touch);
             var id = touch.identifier,
               moveX = touch.clientX - settings.lines[id].x,
               moveY = touch.clientY - settings.lines[id].y,
@@ -172,7 +172,10 @@
 
       onMouseMove: function(e) {
         if (settings.started && !settings.optionsOpen) {
-          plugin.drawLine(e.clientX, e.clientY);
+          console.log(e);
+          var x = e.offsetX,
+              y = e.offsetY;
+          plugin.drawLine(x, y);
         }
         settings.moved = true;
       },
@@ -191,6 +194,9 @@
           xPos = x;
           yPos = y;
         }
+        
+        
+          console.log('x: '+xPos+', y: '+yPos);
 
         /*var grad1 = ctx.createLinearGradient(0, 0, settings.width, settings.height);
               grad1.addColorStop(0,    'yellow');
@@ -263,34 +269,9 @@
         if (!confirm("Clear the drawing?")) {
           return;
         }
-        canvas.setAttribute("height", settings.height + "px");
-        canvas.setAttribute("width", settings.width + "px");
+        canvas.setAttribute("height", settings.height);
+        canvas.setAttribute("width", settings.width);
         this.saveImageData();
-      },
-
-      toggleOptions: function() {
-        if (!settings.optionsOpen) {
-          this.showDrawingOptions();
-        } else {
-          this.closeDrawingOptions();
-        }
-      },
-
-      showDrawingOptions: function() {
-        clearButton = $('#clear-canvas');
-        clearButton.style.fontSize = 100 * pixelRatio + '%';
-        clearButton.addEventListener('click', this.clearCanvas, false);
-        $('.options')
-          .style.display = 'block';
-        settings.optionsOpen = true;
-      },
-
-      closeDrawingOptions: function() {
-        $('#clear-canvas')
-          .removeEventListener('click', this.clearCanvas, false);
-        $('.options')
-          .style.display = 'none';
-        settings.optionsOpen = false;
       }
     };
 

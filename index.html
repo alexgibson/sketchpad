@@ -2,6 +2,7 @@
 <html lang="en"> 
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Sketch</title>
 
 <!-- iOS Full Screen -->
@@ -9,35 +10,38 @@
 
 <!-- iOS Status Bar Style (default, black, black-translucent) -->
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-
-<!-- CSS styles -->
-<link rel="stylesheet" href="css/styles.css" />
-
-<!-- Main JS -->
-<script src="libs/underscore/underscore-min.js"></script>
-<script src="libs/gesture/shake.js"></script>
-<script src="libs/jquery.min.js"></script>
-<script src="jquery.sketchpad.min.js"></script>
+  
+<style>canvas{ cursor: crosshair; }body{ text-align: center; }</style>
 
 </head>
 <body>
-  <a href="#" onclick="k.changeColor(0,255,255,1);">Cyan</a>
-  <a href="#" onclick="k.changeSize(10, true);">Bigger</a>
-  <a href="#" onclick="k.changeSize(-1, true);">Smaller</a>
-  <a href="#" onclick="k.changeSize(100);">100pt</a>
-<div id="canvas">
+  <button onclick="k.changeColor(0,255,255,1);">Cyan</button>
+  <button onclick="k.changeSize(10, true);">Bigger</button>
+  <button onclick="k.changeSize(-10, true);">Smaller</button>
+  <button onclick="k.changeSize(100);">100pt</button>
+  <div id="canvas" style="width: 500px;height: 300px;margin: 0 auto;background: black;">
   </div>
-<div class="options">
-	<button id="clear-canvas" type="button">Clear canvas</button>
-</div>
-<script>
-  $(document).ready(function() {
-    k = $('#canvas')
-      .sketchpad({
-        size: 30
-      });
-    k.init();
-  });
-</script>
+  <!-- Main JS -->
+  <script src="libs/underscore/underscore-min.js"></script>
+  <script src="libs/gesture/shake.js"></script>
+  <script src="libs/jquery.min.js"></script>
+  <script src="js/jquery.sketchpad.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      k = $('#canvas')
+        .sketchpad({
+          size: 30,
+          colors: {
+            r: 255,
+            g: 255,
+            b: 255,
+            a: 1
+          },
+          width: '100%',
+          height: '100%'
+        });
+      k.init();
+    });
+  </script>
 </body>
 </html>
