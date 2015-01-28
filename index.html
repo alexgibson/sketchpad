@@ -21,8 +21,23 @@
 
 </head>
 <body>
+  <a href="#" onclick="k.changeColor(0,255,255,1);">Cyan</a>
+  <a href="#" onclick="k.changeSize(10, true);">Bigger</a>
+  <a href="#" onclick="k.changeSize(-1, true);">Smaller</a>
+  <a href="#" onclick="k.changeSize(100);">100pt</a>
+<div id="canvas">
+  </div>
 <div class="options">
 	<button id="clear-canvas" type="button">Clear canvas</button>
 </div>
+<script>
+  $(document).ready(function() {
+    k = $('#canvas')
+      .sketchpad({
+        size: 30
+      });
+    k.init();
+  });
+</script>
 </body>
 </html>
