@@ -15,7 +15,7 @@ preferably before the `</body>` tag, after including jQuery and the other depend
 ## Options
 jQuery-sketchpad can be extended using the following options:
 
-```
+```javascript
 {
   colors: {
     r: 0, //red stroke
