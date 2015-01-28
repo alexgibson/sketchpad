@@ -251,6 +251,7 @@
         };
       },
 
+      /* Use this method with $.ajax to save an image 
       saveImageData: function() {
         var data = ctx.getImageData(0, 0, settings.width, settings.height);
         if (hasLocalStorage) {
@@ -263,6 +264,8 @@
           }
         }
       },
+      
+      */
 
       clearCanvas: function() {
 
