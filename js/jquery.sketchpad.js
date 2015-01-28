@@ -23,16 +23,11 @@
         },
         started: false,
         moved: false,
-        width: window.innerWidth+'px',
-        height: window.innerHeight+'px',
         size: 10,
         lines: [],
-        optionsOpen: false,
         pixelRatio: 1
 
       }, options);
-    
-    console.log(settings);
 
     var plugin = {
       
@@ -131,7 +126,7 @@
 
         e.preventDefault();
       
-        if (settings.started && !settings.optionsOpen) {
+        if (settings.started) {
           _.each(e.touches, function(touch) {
             console.log(touch);
             var id = touch.identifier,
@@ -171,7 +166,7 @@
       },
 
       onMouseMove: function(e) {
-        if (settings.started && !settings.optionsOpen) {
+        if (settings.started) {
           console.log(e);
           var x = e.offsetX,
               y = e.offsetY;
